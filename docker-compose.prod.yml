@@ -1,0 +1,60 @@
+version: '3.8'
+
+name: mongo
+
+services:
+  mongo1:
+    extends:
+      file: ./docker-compose-mongo.yml
+      service: mongo
+    volumes:
+      - mongo1_data:/data/db
+      - mongo1_config:/data/configdb
+      - ./init/mongo/initdb.d/:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - mongo-network
+    ports:
+      - 27017:27017
+    links:
+      - mongo2
+      - mongo3
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
+  mongo2:
+    extends:
+      file: ./docker-compose-mongo.yml
+      service: mongo
+    volumes:
+      - mongo2_data:/data/db
+      - mongo2_config:/data/configdb
+      - ./init/mongo/initdb.d/:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - mongo-network
+    ports:
+      - 27018:27017
+    restart: unless
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
+  mongo3:
+    extends:
+      file: ./docker-compose-mongo.yml
+      service: mongo
+    volumes:
+      - mongo3_data:/data/db
+      - mongo3_config:/data/configdb
+      - ./init/mongo/initdb.d/:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - mongo-network
+    ports:
+      - 27019:27017
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
+
+networks:
+  mongo-network:
+    driver: bridge
+
+volumes:
+  mongo1_data:
+  mongo1_config:
+  mongo2_data:
+  mongo2_config:
+  mongo3_data:
+  mongo3_config:

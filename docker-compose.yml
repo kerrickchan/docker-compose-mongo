@@ -1,0 +1,18 @@
+version: '3.8'
+
+name: mongo
+
+services:
+  mongo:
+    extends:
+      file: ./docker-compose-mongo.yml
+      service: mongo
+
+  mongo-express:
+    extends:
+      file: ./docker-compose-mongo.yml
+      service: mongo-express
+
+volumes:
+  mongo_data:
+  mongo_config:

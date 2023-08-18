@@ -5,8 +5,25 @@ name: mongo
 services:
   mongo:
     extends:
-      file: ./docker-compose-mongo.yml
+      file: ./docker-compose-mongo.rs.yml
       service: mongo
+    ports:
+      - 27017:27017
+
+  mongo2:
+    extends:
+      file: ./docker-compose-mongo.rs.yml
+      service: mongo2
+
+  mongo3:
+    extends:
+      file: ./docker-compose-mongo.rs.yml
+      service: mongo3
+    
+  mongo-setup:
+    extends:
+      file: ./docker-compose-mongo.rs.yml
+      service: mongo-setup
 
   mongo-express:
     extends:
@@ -16,3 +33,11 @@ services:
 volumes:
   mongo_data:
   mongo_config:
+  mongo2_data:
+  mongo2_config:
+  mongo3_data:
+  mongo3_config:
+
+networks:
+  mongo_net:
+    driver: bridge

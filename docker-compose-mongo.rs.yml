@@ -47,9 +47,12 @@ services:
       - mongo2
       - mongo3
     depends_on:
-      - mongo
-      - mongo2
-      - mongo3
+      - mongo:
+        condition: service_healthy
+      - mongo2:
+        condition: service_healthy
+      - mongo3:
+        condition: service_healthy
     volumes:
       - ./init/mongo/setup/:/scripts/
     restart: "no"

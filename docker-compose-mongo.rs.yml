@@ -47,11 +47,11 @@ services:
       - mongo2
       - mongo3
     depends_on:
-      - mongo:
+      mongo:
         condition: service_healthy
-      - mongo2:
+      mongo2:
         condition: service_healthy
-      - mongo3:
+      mongo3:
         condition: service_healthy
     volumes:
       - ./init/mongo/setup/:/scripts/

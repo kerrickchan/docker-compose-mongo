@@ -21,7 +21,6 @@ services:
     volumes:
       - mongo2_data:/data/db
       - mongo2_config:/data/configdb
-      - ./init/mongo/initdb/:/docker-entrypoint-initdb.d/:ro
     ports:
       - 27018:27017
     command: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
@@ -33,7 +32,6 @@ services:
     volumes:
       - mongo3_data:/data/db
       - mongo3_config:/data/configdb
-      - ./init/mongo/initdb/:/docker-entrypoint-initdb.d/:ro
     ports:
       - 27019:27017
     command: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
@@ -55,8 +53,33 @@ services:
         condition: service_healthy
     volumes:
       - ./init/mongo/setup/:/scripts/
-    restart: "no"
-    entrypoint: [ "bash", "/scripts/mongo_setup.sh"]
+    restart: no
+    command: >
+      mongo --host localhost:27017 --eval 
+      '
+      db = (new Mongo("localhost:27017")).getDB("test");
+      config = {
+      "_id" : "my-mongo-set",
+      "members" : [
+        {
+          "_id" : 0,
+          "host" : "localhost:27017",
+          "priority": 1
+        },
+        {
+          "_id" : 1,
+          "host" : "localhost:27018",
+          "priority": 0.5
+        },
+        {
+          "_id" : 2,
+          "host" : "localhost:27019",
+          "priority": 0.5
+        }
+      ]
+      };
+      rs.initiate(config);
+      '
 
   mongo-express:
     extends:

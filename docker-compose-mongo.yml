@@ -17,19 +17,6 @@ services:
       timeout: 5s
       retries: 3
 
-  mongo-express:
-    image: mongo-express
-    restart: unless-stopped
-    environment:
-      ME_CONFIG_MONGODB_URL: "mongodb://mongo:27017?replicaSet=rs0"
-    networks:
-      - mongo_net
-    ports:
-      - 8081:8081
-    depends_on:
-      mongo:
-        condition: service_healthy
-
 volumes:
   mongo_data:
   mongo_config:

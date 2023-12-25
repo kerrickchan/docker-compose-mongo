@@ -39,11 +39,6 @@ services:
       - 27037:27017
     command: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
 
-  mongo-express:
-    extends:
-      file: ./docker-compose-mongo.yml
-      service: mongo-express
-
 volumes:
   mongo_data:
   mongo_config:

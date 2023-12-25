@@ -51,15 +51,13 @@ services:
         condition: service_healthy
       mongo3:
         condition: service_healthy
-    volumes:
-      - ./init/mongo/setup/:/scripts/
     restart: no
     command: >
       mongo --host localhost:27017 --eval 
       '
       db = (new Mongo("localhost:27017")).getDB("test");
       config = {
-      "_id" : "my-mongo-set",
+      "_id" : "rs0",
       "members" : [
         {
           "_id" : 0,

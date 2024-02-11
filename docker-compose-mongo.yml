@@ -1,8 +1,8 @@
-version: '3.9'
+version: '3.8'
 
 services:
   mongo:
-    image: mongo:7.0.4
+    image: mongo:7.0.5
     restart: unless-stopped
     volumes:
       - mongo_data:/data/db

@@ -21,16 +21,3 @@ make mongo
 make rs
 ```
 Note: the bash script need all container instance running. simplify make rs twice to make it works and manually run script provided
-
-## Copy and Paste
-
-Copy all the repo code `other than the README.md` file into a directory and run the following command:
-
-```bash
-docker compose up
-```
-
-# Suitable Projects
-
-- [NextJS](https://nextjs.org/)
-- [NestJS](https://nestjs.com/)

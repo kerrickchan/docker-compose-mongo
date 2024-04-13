@@ -4,7 +4,14 @@ This is a simple example of how to run a MongoDB replica set using Docker Compos
 
 # Usage
 
-1. Make a mongo instance
+## Setup
+* Make bash available
+```bash
+make setup
+```
+
+## Options
+1. Make a mongo single instance
 ```bash
 make mongo
 ```

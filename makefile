@@ -1,3 +1,7 @@
+setup:
+	chmod +x ./add-mongo-host.sh
+	chmod +x ./init-rs.sh
+
 mongo:
 	docker compose up -d
 

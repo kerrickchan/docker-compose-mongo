@@ -4,7 +4,6 @@ name: mongo
 
 services:
   mongo:
-    hostname: mongo
     extends:
       file: ./docker-compose-mongo.yml
       service: mongo
@@ -16,7 +15,7 @@ services:
     command: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
 
   mongo2:
-    hostname: mongo2
+    container_name: mongo-mongo-2
     extends:
       file: ./docker-compose-mongo.yml
       service: mongo
@@ -24,11 +23,11 @@ services:
       - mongo2_data:/data/db
       - mongo2_config:/data/configdb
     ports:
-      - 27027:27017
+      - 27018:27017
     command: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
 
   mongo3:
-    hostname: mongo3
+    container_name: mongo-mongo-3
     extends:
       file: ./docker-compose-mongo.yml
       service: mongo
@@ -36,7 +35,7 @@ services:
       - mongo3_data:/data/db
       - mongo3_config:/data/configdb
     ports:
-      - 27037:27017
+      - 27019:27017
     command: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
 
 volumes:

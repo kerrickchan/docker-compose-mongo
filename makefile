@@ -11,4 +11,6 @@ mongo-rs:
 
 rs:
 	docker compose -f docker-compose-rs.yml up -d
+
+rs-init:
 	bash ./init-rs.sh

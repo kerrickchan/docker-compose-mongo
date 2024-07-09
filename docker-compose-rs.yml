@@ -1,18 +1,14 @@
-version: '3.8'
-
 name: mongo
 
 services:
-  mongo:
+  mongo1:
+    container_name: mongo-mongo-1
     extends:
       file: ./docker-compose-mongo.yml
       service: mongo
-    links:
-      - mongo2
-      - mongo3
     ports:
       - 27017:27017
-    command: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
+    command: ["mongod", "--replSet", "rs0", "--port",  "27017"]
 
   mongo2:
     container_name: mongo-mongo-2
@@ -23,8 +19,8 @@ services:
       - mongo2_data:/data/db
       - mongo2_config:/data/configdb
     ports:
-      - 27018:27017
-    command: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
+    - 27018:27018
+    command: ["mongod", "--replSet", "rs0", "--port",  "27018"]
 
   mongo3:
     container_name: mongo-mongo-3
@@ -35,8 +31,8 @@ services:
       - mongo3_data:/data/db
       - mongo3_config:/data/configdb
     ports:
-      - 27019:27017
-    command: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
+      - 27019:27019
+    command: ["mongod", "--replSet", "rs0", "--port",  "27019"]
 
 volumes:
   mongo_data:
@@ -45,7 +41,3 @@ volumes:
   mongo2_config:
   mongo3_data:
   mongo3_config:
-
-networks:
-  mongo_net:
-    driver: bridge
